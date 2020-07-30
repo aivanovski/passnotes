@@ -1,6 +1,10 @@
+@file:Suppress("FoldInitializerAndIfToElvis")
+
 package com.ivanovsky.passnotes.domain
 
 import com.ivanovsky.passnotes.data.entity.FileDescriptor
+import com.ivanovsky.passnotes.data.entity.OperationError.MESSAGE_FAILED_TO_RESOLVE_SYNC_PROCESSOR
+import com.ivanovsky.passnotes.data.entity.OperationError.newGenericError
 import com.ivanovsky.passnotes.data.entity.OperationResult
 import com.ivanovsky.passnotes.data.repository.file.FSType
 import com.ivanovsky.passnotes.data.repository.file.FileSystemResolver
@@ -19,8 +23,12 @@ class FileSyncHelper(private val fileSystemResolver: FileSystemResolver) {
 
     fun resolve(file: FileDescriptor): OperationResult<FileDescriptor> {
         val provider = fileSystemResolver.resolveProvider(file.fsType)
+        val syncProcessor = provider.syncProcessor
+        if (syncProcessor == null) {
+            return OperationResult.error(newGenericError(MESSAGE_FAILED_TO_RESOLVE_SYNC_PROCESSOR))
+        }
 
-        return provider.syncProcessor.process(
+        return syncProcessor.process(
             file,
             SyncStrategy.LAST_MODIFICATION_WINS,
             OnConflictStrategy.CANCEL

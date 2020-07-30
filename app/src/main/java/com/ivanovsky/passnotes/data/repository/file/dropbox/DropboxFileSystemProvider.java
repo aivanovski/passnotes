@@ -1,5 +1,8 @@
 package com.ivanovsky.passnotes.data.repository.file.dropbox;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.FolderMetadata;
 import com.dropbox.core.v2.files.Metadata;
@@ -82,11 +85,13 @@ public class DropboxFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@NonNull
 	public FileSystemAuthenticator getAuthenticator() {
 		return authenticator;
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<List<FileDescriptor>> listFiles(FileDescriptor dir) {
 		OperationResult<List<FileDescriptor>> result = new OperationResult<>();
 
@@ -116,6 +121,7 @@ public class DropboxFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<FileDescriptor> getParent(FileDescriptor file) {
 		OperationResult<FileDescriptor> result = new OperationResult<>();
 
@@ -129,6 +135,7 @@ public class DropboxFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<FileDescriptor> getRootFile() {
 		OperationResult<FileDescriptor> result = new OperationResult<>();
 
@@ -142,6 +149,7 @@ public class DropboxFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<FileDescriptor> getFile(String path, boolean cacheOperationsEnabled) {
 		OperationResult<FileDescriptor> result = new OperationResult<>();
 
@@ -202,6 +210,7 @@ public class DropboxFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<InputStream> openFileForRead(FileDescriptor file,
 														OnConflictStrategy onConflictStrategy,
 														boolean cacheOperationsEnabled) {
@@ -361,6 +370,7 @@ public class DropboxFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<OutputStream> openFileForWrite(FileDescriptor file,
 														  OnConflictStrategy onConflict,
 														  boolean cacheOperationsEnabled) {
@@ -696,6 +706,7 @@ public class DropboxFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<Boolean> exists(FileDescriptor file) {
 		OperationResult<Boolean> result = new OperationResult<>();
 
@@ -711,6 +722,7 @@ public class DropboxFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@Nullable
 	public FileSystemSyncProcessor getSyncProcessor() {
 		return syncProcessor;
 	}

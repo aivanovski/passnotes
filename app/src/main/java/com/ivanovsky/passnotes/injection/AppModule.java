@@ -6,6 +6,7 @@ import android.content.Context;
 import com.ivanovsky.passnotes.data.ObserverBus;
 import com.ivanovsky.passnotes.data.repository.DropboxFileRepository;
 import com.ivanovsky.passnotes.data.repository.db.AppDatabase;
+import com.ivanovsky.passnotes.data.repository.db.dao.RemoteFileDao;
 import com.ivanovsky.passnotes.data.repository.file.FileSystemResolver;
 import com.ivanovsky.passnotes.data.repository.keepass.KeepassDatabaseRepository;
 import com.ivanovsky.passnotes.data.repository.EncryptedDatabaseRepository;
@@ -67,6 +68,12 @@ public class AppModule {
 	@Singleton
 	DropboxFileRepository provideDropboxFileRepository(AppDatabase db) {
 		return new DropboxFileRepository(db.getDropboxFileDao());
+	}
+
+	@Provides
+	@Singleton
+	RemoteFileDao provideRemoteFileDao(AppDatabase db) {
+		return db.getRemoteFileDao();
 	}
 
 	@Provides

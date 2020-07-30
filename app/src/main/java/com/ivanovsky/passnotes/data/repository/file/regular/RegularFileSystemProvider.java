@@ -1,5 +1,8 @@
 package com.ivanovsky.passnotes.data.repository.file.regular;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.ivanovsky.passnotes.data.entity.FileDescriptor;
 import com.ivanovsky.passnotes.data.entity.OperationError;
 import com.ivanovsky.passnotes.data.entity.OperationResult;
@@ -29,22 +32,27 @@ import static com.ivanovsky.passnotes.data.entity.OperationError.newGenericIOErr
 public class RegularFileSystemProvider implements FileSystemProvider {
 
 	private final Lock lock;
+	private final RegularFileSystemAuthenticator authenticator;
 
 	public RegularFileSystemProvider() {
 		this.lock = new ReentrantLock();
+		this.authenticator = new RegularFileSystemAuthenticator();
 	}
 
+	@NonNull
 	@Override
 	public FileSystemAuthenticator getAuthenticator() {
-		return null;
+		return authenticator;
 	}
 
+	@Nullable
 	@Override
 	public FileSystemSyncProcessor getSyncProcessor() {
 		return null;
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<List<FileDescriptor>> listFiles(FileDescriptor dir) {
 		OperationResult<List<FileDescriptor>> result = new OperationResult<>();
 
@@ -76,6 +84,7 @@ public class RegularFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<FileDescriptor> getParent(FileDescriptor fileDescriptor) {
 		OperationResult<FileDescriptor> result = new OperationResult<>();
 
@@ -96,6 +105,7 @@ public class RegularFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<FileDescriptor> getRootFile() {
 		OperationResult<FileDescriptor> result = new OperationResult<>();
 
@@ -110,6 +120,7 @@ public class RegularFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<InputStream> openFileForRead(FileDescriptor file,
 														OnConflictStrategy onConflictStrategy,
 														boolean cacheOperationsEnabled) {
@@ -130,6 +141,7 @@ public class RegularFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<OutputStream> openFileForWrite(FileDescriptor file,
 														  OnConflictStrategy onConflictStrategy,
 														  boolean cacheOperationsEnabled) {
@@ -151,12 +163,14 @@ public class RegularFileSystemProvider implements FileSystemProvider {
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<Boolean> exists(FileDescriptor file) {
 		boolean exists = new File(file.getPath()).exists();
 		return OperationResult.success(exists);
 	}
 
 	@Override
+	@NonNull
 	public OperationResult<FileDescriptor> getFile(String path, boolean cacheOperationsEnabled) {
 		OperationResult<FileDescriptor> result = new OperationResult<>();
 

@@ -3,7 +3,6 @@ package com.ivanovsky.passnotes.data.entity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
 
 import com.ivanovsky.passnotes.data.repository.file.FSType;
 
@@ -111,33 +110,5 @@ public class UsedFile {
 				.append(fileUid)
 				.append(fsType)
 				.toHashCode();
-	}
-
-	public static class FSTypeConverter {
-
-		@TypeConverter
-		public FSType fromDatabaseValue(int value) {
-			switch (value) {
-				case 1:
-					return FSType.REGULAR_FS;
-				case 2:
-					return FSType.DROPBOX;
-				default:
-					throw new IllegalArgumentException("Failed to determine FSType " +
-							"corresponding to value: " + value);
-			}
-		}
-
-		@TypeConverter
-		public int toDatabaseValue(FSType fsType) {
-			switch (fsType) {
-				case REGULAR_FS:
-					return 1;
-				case DROPBOX:
-					return 2;
-				default:
-					return 0;
-			}
-		}
 	}
 }

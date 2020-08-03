@@ -4,15 +4,14 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ivanovsky.passnotes.R
-import kotlin.math.exp
 
-class ExpandableFloatingActionButton constructor(context: Context, attrs: AttributeSet) :
+class ExpandableFloatingActionButton @JvmOverloads constructor(context: Context, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
 
     lateinit var onItemClickListener: (position: Int) -> Unit
@@ -52,7 +51,8 @@ class ExpandableFloatingActionButton constructor(context: Context, attrs: Attrib
         return fab
     }
 
-    private fun onMainFabClicked() {
+    @VisibleForTesting
+    fun onMainFabClicked() {
         if (isCollapsed) {
             expand()
         } else {
@@ -60,14 +60,16 @@ class ExpandableFloatingActionButton constructor(context: Context, attrs: Attrib
         }
     }
 
-    private fun expand() {
+    @VisibleForTesting
+    fun expand() {
         mainFab.setImageResource(R.drawable.ic_expand_more_white_24dp)
         fabContainer.isVisible = true
 
         isCollapsed = false
     }
 
-    private fun collapse() {
+    @VisibleForTesting
+    fun collapse() {
         mainFab.setImageResource(R.drawable.ic_add_white_24dp)
         fabContainer.isVisible = false
 
